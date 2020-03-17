@@ -21,9 +21,11 @@ export const initialState = {
 export const appReducer = (state = initialState,action) =>{
      console.log('log',  action)
      switch (action.type){
+         
          case 'ADD_ITEM':
              return{
                  ...state,
+                 additionalPrice: state.additionalPrice + action.payload.price,
                  car: {
                      ...state.car,
                      features: [...state.car.features, action.payload]
@@ -33,9 +35,13 @@ export const appReducer = (state = initialState,action) =>{
                  return{
             
                      ...state,
+                     additionalPrice: state.additionalPrice - action.payload.price,
                      car:{
                          ...state.car,
-                         features: [ ...state.car.features.filter(item=>!action.payload) ]
+                         features: [ ...state.car.features.filter(item=>{ if(item ===action.payload){
+                            return false 
+                            
+                         }else {return true}}) ]
                      }
                  }
          default: 
